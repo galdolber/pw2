@@ -1,0 +1,270 @@
+-->Proyecto creado para bundelizar photon con webpack para luego usar con cljs
+
+--Proyecto creado con el archivo src/index.js. comando 'npm init' para crear el package.json y comando
+'npm install webpack webpack-cli' para instalar webpack.
+
+--agregamos el comando '"dev": "webpack --mode development --watch",' dentro de "scripts" en el package.json que
+podemos correr con el alias dev de la forma 'npm run dev'. esto crea la carpeta dist con el archivo main.js que es
+el resultado del bundelizado.
+
+--agregamos el archivo index.html en la carpeta dist asi podemos servir main.js con un <script>
+
+--para probar que el bundelizado funciona instalamos react y react-dom con npm install y pegamos el siguiente
+codigo en index.js:
+
+var React = require('react');
+var ReactDOM = require ("react-dom");
+
+window.React = React
+window.ReactDOM = ReactDOM
+
+ReactDOM.render(
+    React.createElement("h1", null, "Con React"),
+    document.getElementById("app"))
+
+--Con esto logramos modificar el elemento div con id="app" del html y agregar en el un h1 con el texto "Con React"
+
+--Podemos verificar que funciona ademas ingresando window.React y window.ReactDOM en la consola del browse que es
+de la manera en la que expusimos dichos objetos en el codigo de index.js
+
+--procedemos a agregar photon con npm install @sylvia-odwyer/photon y corremos el bundelizado con npm run build:
+
+PS C:\Users\usuario\desktop\clojure\pw2> npm run build
+
+> pw2@1.0.0 build C:\Users\usuario\desktop\clojure\pw2
+> webpack --mode production
+
+assets by status 144 KiB [cached] 1 asset
+runtime modules 1.13 KiB 5 modules
+modules by path ./node_modules/ 1.37 MiB
+  modules by path ./node_modules/react/ 6.48 KiB 2 modules
+  modules by path ./node_modules/react-dom/ 119 KiB
+    ./node_modules/react-dom/index.js 1.33 KiB [built] [code generated
+]
+    ./node_modules/react-dom/cjs/react-dom.production.min.js 118 KiB [
+built] [code generated]
+  modules by path ./node_modules/@silvia-odwyer/photon/ 1.24 MiB
+    ./node_modules/@silvia-odwyer/photon/photon.js 80.6 KiB [built] [c
+ode generated]
+    ./node_modules/@silvia-odwyer/photon/photon_bg.wasm 1.16 MiB [buil
+t] [code generated] [1 error]
+  modules by path ./node_modules/scheduler/ 4.91 KiB
+    ./node_modules/scheduler/index.js 198 bytes [built] [code generate
+d]
+    ./node_modules/scheduler/cjs/scheduler.production.min.js 4.72 KiB
+[built] [code generated]
+  ./node_modules/object-assign/index.js 2.06 KiB [built] [code generat
+ed]
+./src/index.js 304 bytes [built] [code generated]
+
+ERROR in ./node_modules/@silvia-odwyer/photon/photon.js 109:58-85
+Module not found: Error: Can't resolve 'util' in 'C:\Users\usuario\des
+ktop\clojure\pw2\node_modules\@silvia-odwyer\photon'
+
+BREAKING CHANGE: webpack < 5 used to include polyfills for node.js cor
+e modules by default.
+This is no longer the case. Verify if you need this module and configu
+re a polyfill for it.
+
+If you want to include a polyfill, you need to:
+        - add a fallback 'resolve.fallback: { "util": require.resolve(
+"util/") }'
+        - install 'util'
+If you don't want to include a polyfill, you can use an empty module l
+ike this:
+        resolve.fallback: { "util": false }
+ @ ./src/index.js 3:13-45
+
+ERROR in ./node_modules/@silvia-odwyer/photon/photon_bg.wasm 1:0
+Module parse failed: Unexpected character ' ' (1:0)
+The module seem to be a WebAssembly module, but module is not flagged
+as WebAssembly module for webpack.
+BREAKING CHANGE: Since webpack 5 WebAssembly is not enabled by default
+ and flagged as experimental feature.
+You need to enable one of the WebAssembly experiments via 'experiments
+.asyncWebAssembly: true' (based on async modules) or 'experiments.sync
+WebAssembly: true' (like webpack 4, deprecated).
+For files that transpile to WebAssembly, make sure to set the module t
+ype in the 'module.rules' section of the config (e. g. 'type: "webasse
+mbly/async"').
+(Source code omitted for this binary file)
+ @ ./node_modules/@silvia-odwyer/photon/photon.js 1:0-41 103:73-91 104
+:46-64 166:73-91 167:46-64 206:4-24 227:4-16 247:4-23 267:4-17 287:4-1
+7 308:4-22 328:4-32 348:4-30 368:4-28 388:4-29 408:4-16 428:4-17 448:4
+-15 468:4-25 488:4-27 508:4-23 547:4-22 569:4-26 591:4-28 613:4-27 640
+:4-27 666:4-23 691:4-23 712:4-27 733:4-29 754:4-28 777:4-22 807:4-29 8
+24:4-15 853:4-26 883:4-29 913:4-27 944:4-28 973:4-19 993:4-14 1012:4-1
+8 1031:4-34 1050:4-19 1068:4-22 1086:4-22 1106:4-25 1123:4-20 1140:4-2
+0 1157:4-20 1176:4-33 1197:4-18 1220:4-14 1243:4-14 1262:14-25 1294:39
+-61 1294:63-86 1296:4-30 1327:39-61 1327:63-86 1329:4-18 1355:4-18 138
+4:45-67 1384:69-92 1386:4-14 1395:14-34 1405:4-23 1422:4-13 1439:4-12
+1456:4-12 1492:46-68 1492:70-93 1494:4-15 1511:4-13 1528:4-20 1545:4-1
+5 1562:4-13 1579:4-17 1596:4-16 1613:4-17 1647:39-61 1647:63-86 1649:4
+-12 1682:39-61 1682:63-86 1684:4-12 1718:39-61 1718:63-86 1720:4-12 17
+44:4-23 1768:4-23 1792:4-23 1819:4-21 1845:4-21 1871:4-21 1898:4-20 19
+24:4-20 1951:4-20 1978:4-19 2005:4-19 2032:4-19 2059:4-23 2086:4-23 21
+13:4-23 2146:4-24 2163:4-12 2181:18-37 2199:4-21 2212:14-29 2222:4-22
+2226:4-24 2236:41-63 2236:65-88 2238:14-34 2248:41-63 2248:65-88 2250:
+4-22 2254:4-24 2267:14-32 2290:4-15 2311:4-19 2332:4-21 2351:4-20 2374
+:4-25 2393:4-16 2412:4-17 2431:4-17 2451:14-34 2471:4-23 2491:4-24 251
+6:4-13 2526:4-26 2536:4-24 2540:4-29 2549:87-105 2550:60-78 2578:8-35
+2587:49-71 2589:18-38 2598:45-67 2598:69-92 2600:18-50 2609:42-64 2611
+:18-53 2619:18-44 2627:8-39 2631:8-28 2639:18-45 2648:12-39 2653:12-32
+ 2661:18-49 2669:8-36 2688:8-27 2697:18-30 2705:8-24 2712:8-26 2719:8-
+25 2726:18-34 2734:18-36 2742:18-35 2758:38-60 2758:62-85 2768:8-28 28
+66:38-60 2952:38-60 2952:62-85
+ @ ./src/index.js 3:13-45
+
+webpack 5.11.1 compiled with 2 errors in 3953 ms
+npm ERR! code ELIFECYCLE
+npm ERR! errno 1
+npm ERR! pw2@1.0.0 build: `webpack --mode production`
+npm ERR! Exit status 1
+npm ERR!
+npm ERR! Failed at the pw2@1.0.0 build script.
+npm ERR! This is probably not a problem with npm. There is likely addi
+tional logging output above.
+
+npm ERR! A complete log of this run can be found in:
+npm ERR!     C:\Users\usuario\AppData\Roaming\npm-cache\_logs\2021-01-
+06T00_25_52_046Z-debug.log
+
+
+--para el primer problema corri 'npm install util' y cree el archivo webpack.config.js con el siguiente codigo:
+https://stackoverflow.com/questions/64402821/module-not-found-error-cant-resolve-util-in-webpack
+
+module.exports = {
+  resolve: {
+      fallback: {
+        util: require.resolve("util/")
+      }
+  }
+};
+
+
+--para el segundo primero agregue la siguiente configuracion:
+
+    experiments: {
+        outputModule: true,
+        syncWebAssembly: true,
+        topLevelAwait: true,
+        asyncWebAssembly: true,
+      },
+
+pero no se soluciono
+
+--probe con:
+
+    asyncWebAssembly: true,
+    importAsync: true
+
+pero arrojo este error:
+
+PS C:\Users\usuario\desktop\clojure\pw2> npm run build
+
+> pw2@1.0.0 build C:\Users\usuario\desktop\clojure\pw2
+> webpack --mode production
+
+[webpack-cli] Invalid configuration object. Webpack has been initializ
+ed using a configuration object that does not match the API schema.
+ - configuration.experiments has an unknown property 'importAsync'. Th
+ese properties are valid:
+   object { asset?, asyncWebAssembly?, outputModule?, syncWebAssembly?
+, topLevelAwait? }
+   -> Enables/Disables experiments (experimental features with relax S
+emVer compatibility).
+npm ERR! code ELIFECYCLE
+npm ERR! errno 2
+npm ERR! pw2@1.0.0 build: `webpack --mode production`
+npm ERR! Exit status 2
+npm ERR!
+npm ERR! Failed at the pw2@1.0.0 build script.
+npm ERR! This is probably not a problem with npm. There is likely addi
+tional logging output above.
+
+npm ERR! A complete log of this run can be found in:
+npm ERR!     C:\Users\usuario\AppData\Roaming\npm-cache\_logs\2021-01-
+06T01_26_05_545Z-debug.log
+
+--Saque importAsync: true porque ya no existe en webpack y bundelizo bien, solo que con el siguiente warning:
+
+PS C:\Users\usuario\desktop\clojure\pw2> npm run build
+
+> pw2@1.0.0 build C:\Users\usuario\desktop\clojure\pw2
+> webpack --mode production
+
+asset 584d76cd973e43bcae63.module.wasm 972 KiB [emitted] [immutable] [
+big] (auxiliary name: main)
+asset main.js 177 KiB [emitted] [minimized] (name: main) 1 related ass
+et
+runtime modules 2.23 KiB 6 modules
+javascript modules 278 KiB
+  modules by path ./node_modules/util/ 27.7 KiB 3 modules
+  modules by path ./node_modules/react/ 6.48 KiB 2 modules
+  modules by path ./node_modules/react-dom/ 119 KiB 2 modules
+  modules by path ./node_modules/scheduler/ 4.91 KiB 2 modules
+  modules by path ./node_modules/call-bind/*.js 1.22 KiB 2 modules
+  modules by path ./node_modules/has-symbols/*.js 2.08 KiB 2 modules
+  modules by path ./node_modules/es-abstract/ 11.5 KiB
+    ./node_modules/es-abstract/helpers/getOwnPropertyDescriptor.js 258
+ bytes [built] [code generated]
+    ./node_modules/es-abstract/GetIntrinsic.js 11.3 KiB [built] [code
+generated]
+  modules by path ./node_modules/function-bind/*.js 1.55 KiB
+    ./node_modules/function-bind/index.js 126 bytes [built] [code gene
+rated]
+    ./node_modules/function-bind/implementation.js 1.43 KiB [built] [c
+ode generated]
+./node_modules/@silvia-odwyer/photon/photon_bg.wasm 390 bytes (javascr
+ipt) 972 KiB (webassembly) [built] [code generated]
+
+WARNING in asset size limit: The following asset(s) exceed the recomme
+nded size limit (244 KiB).
+This can impact web performance.
+Assets:
+  584d76cd973e43bcae63.module.wasm (972 KiB)
+
+WARNING in webpack performance recommendations:
+You can limit the size of your bundles by using import() or require.en
+sure to lazy load some parts of your application.
+For more info visit https://webpack.js.org/guides/code-splitting/
+
+webpack 5.11.1 compiled with 2 warnings in 4743 ms
+
+--Pero al abrirlo en el browser en la consola figura este error:
+
+main.js:2 Uncaught (in promise) ReferenceError: Cannot access 'Ot' before initialization
+    at Module.__wbindgen_object_drop_ref (main.js:2)
+    at main.js:2
+    at :8080/dist/async http:/localhost:8080/dist/main.js:2
+__wbindgen_object_drop_ref @ main.js:2
+(anonymous) @ main.js:2
+async function (async)
+(anonymous) @ main.js:2
+555 @ main.js:2
+a @ main.js:2
+(anonymous) @ main.js:2
+(anonymous) @ main.js:2
+
+que no me deja acceder a window.Photon correctamente
+
+--Si cambio asyncWebAssembly: true, a syncWebAssembly: true, sugiere que agregue un archivo intermedio que si se
+cargue asyncronicamente:
+
+ERROR in ./node_modules/@silvia-odwyer/photon/photon_bg.wasm
+WebAssembly module is included in initial chunk.
+This is not allowed, because WebAssembly download and compilation must
+ happen asynchronous.
+Add an async split point (i. e. import()) somewhere between your entry
+point and the WebAssembly module:
+* ./src/index.js --> ./node_modules/@silvia-odwyer/photon/photon.js --
+> ./node_modules/@silvia-odwyer/photon/photon_bg.wasm
+* ... --> ./node_modules/@silvia-odwyer/photon/photon.js --> ./node_mo
+dules/@silvia-odwyer/photon/photon_bg.wasm --> ./node_modules/@silvia-
+odwyer/photon/photon.js --> ./node_modules/@silvia-odwyer/photon/photo
+n_bg.wasm
+
+--Entonces agregue el archivo bootstrap.ts con el siguiente contenido:
+import('./index').catch(e => console.error('Error importing `index.js`:', e))
+y lo indique como el nuevo punto de entrada en webpack.config como entry: './src/bootstrap.ts',
+con esto finalmente pude acceder a window.photon desde el browser
